@@ -87,9 +87,10 @@ class auctioneer:
 
     def auction(self, tasks):
         if self.method == 0:
-            self.random_auction(tasks)
+            self.random_assignation(tasks)
         elif self.method == 1:
-            self.dcop_auction(tasks)
+            self.generate_dcop(tasks)
+            self.dcop_assignation(tasks)
         elif self.method == 2:
             self.parallel_single_item_auction(tasks)
         elif self.method == 3:
@@ -103,13 +104,33 @@ class auctioneer:
             for taxi in self.taxis:
                 taxi.rearrange_tasks(0)
 
-    def random_auction(self, tasks):
+    def random_assignation(self, tasks):
+        """
+        Assigns tasks to taxis randomly
+        """
         to_assign = tasks.copy()
         for task_to_assign in to_assign:
             winner = random.choice(self.taxis)
             winner.assign(task_to_assign)
 
+    def generate_dcop(self, tasks):
+        """
+        Generates a DCOP file for the assignment of tasks to taxis
+        """
+        
+        raise NotImplementedError
+    
+    def dcop_assignation(self, tasks):
+        """
+        Assigns tasks to taxis using a DCOP
+        """
+        raise NotImplementedError
+    
     def parallel_single_item_auction(self, tasks):
+        """
+        Assigns tasks to taxis using a parallel single item auction
+        """
+
         to_assign = tasks.copy()
         bests_bids = []
         for task_to_assign in to_assign:
@@ -127,8 +148,11 @@ class auctioneer:
             winner.assign(best_bid[0], best_bid[2])
             to_assign.remove(best_bid[0])
 
-
     def sequential_single_item_auction(self, tasks):
+        """
+        Assigns tasks to taxis using a sequential single item auction
+        """
+
         to_assign = tasks.copy()
         while len(to_assign) > 0:
             bids = []
@@ -144,6 +168,9 @@ class auctioneer:
             to_assign.remove(best_bid[0])
     
     def regret_auction(self, tasks):
+        """
+        Assigns tasks to taxis using a sequential single item auction based on regret
+        """
         to_assign = tasks.copy()
         while len(to_assign) > 0:
             max_regret = -1
@@ -168,6 +195,12 @@ class auctioneer:
                     winner = potential_winner
             winner.assign(overall_best_bid[0], overall_best_bid[2])
             to_assign.remove(overall_best_bid[0])
+
+    def cbba_auction(self, tasks):
+        """
+        Assigns tasks to taxis using the Consensus-Based Bundle Algorithm
+        """
+        raise NotImplementedError
 
 class environnement:
     def __init__(self, taille:int, num_taxis : int, freq_tasks : int, n_tasks : int, method : int, ordonnancement : int, heuristic : int, interface : bool = True):
