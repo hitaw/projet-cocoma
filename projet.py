@@ -20,7 +20,10 @@ class taxi:
     def estimate_Prim(self, tasks : object):
         best_bid = (None, float("inf"), -1)
         for task_available in tasks:
-            min_cost = abs(self.position[0] - task_available.departure[0]) + abs(self.position[1] - task_available.departure[1])
+            if self.going_to_departure_point: #Si je ne suis pas en train de faire une tâche
+                min_cost = abs(self.position[0] - task_available.departure[0]) + abs(self.position[1] - task_available.departure[1])
+            else: #Si je suis en train de faire une tâche, la position actuelle du taxi ne compte pas dans le calcul du coût minimal
+                min_cost = math.inf
             for task_in_taxi in self.tasks:
                 cost = abs(task_in_taxi.destination[0] - task_available.departure[0]) + abs(task_in_taxi.destination[1] - task_available.departure[1])
                 if cost < min_cost:
@@ -35,6 +38,8 @@ class taxi:
             min_cost = math.inf
             pos = -1
             for i in range(len(self.tasks) + 1):
+                if i == 0 and not self.going_to_departure_point: # Si on est en train de faire une tâche, on ne peut pas insérer une autre tâche avant
+                    continue
                 cost = self.calculate_cost(self.tasks[:i] + [task_available] + self.tasks[i:])
                 if cost < min_cost:
                     min_cost = cost
@@ -86,18 +91,23 @@ class auctioneer:
         self.heuristic = heuristic
 
     def auction(self, tasks):
-        if self.method == 0:
+        if self.method == 0: #Random
             self.random_assignation(tasks)
-        elif self.method == 1:
+
+        elif self.method == 1: #DCOP
             self.generate_dcop(tasks)
             self.dcop_assignation(tasks)
-        elif self.method == 2:
+
+        elif self.method == 2: #PSI
             self.parallel_single_item_auction(tasks)
-        elif self.method == 3:
+
+        elif self.method == 3: #SSI
             self.sequential_single_item_auction(tasks)
-        elif self.method == 4:
+
+        elif self.method == 4: #Regret
             self.regret_auction(tasks)
-        elif self.method == 5:
+
+        elif self.method == 5: #CBBA
             self.cbba_auction(tasks)
 
         if self.heuristic == 0:
