@@ -367,7 +367,7 @@ class auctioneer:
             fn = fn[:-4]
             f.write(fn + " else 0\n")
     
-    def dcop_assignation(self, file_path="dcop_files\dcop_tasks.yml", algorithm="dpop"):
+    def dcop_assignation(self, algorithm="dpop", file_path="dcop_files\dcop_tasks.yml"):
         """
         Assigns tasks to taxis using a DCOP
         """
@@ -379,12 +379,10 @@ class auctioneer:
             print(f"Fichier DCOP chargé : {file_path}")
             
             # Commande Pydcop pour résoudre le DCOP
-            command = ["pydcop", "solve", "--algo", algorithm, file_path]
-            print(f"Exécution de Pydcop avec l'algorithme {algorithm}...")
+            command = f"pydcop solve --algo {algorithm} dcop_files\dcop_tasks.yml"
 
-            # Exécution de la commande
-            result = subprocess.run(command, capture_output=True, text=True)
-
+            with open("resultats.json", "w") as result_file:
+                result = subprocess.run(command, shell=True, stdout=result_file, stderr=subprocess.PIPE, executable = "/bin/bash")
             # Afficher la sortie brute de Pydcop
             print("Sortie brute de Pydcop :")
             print(result.stdout)
