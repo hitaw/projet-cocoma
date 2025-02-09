@@ -22,7 +22,7 @@ def plot_data(folder_path, method=None, heuristic=None, ordonnancement=None):
         file_ordonnancement = title.split(",")[2].split(":")[-1].strip()
 
         # Filter based on method, heuristic, and ordonnancement
-        if (method and file_method != method) or (heuristic and file_heuristic != heuristic) or (ordonnancement and file_ordonnancement != ordonnancement) or (method == "Random"):
+        if (method and file_method != method) or (heuristic and file_heuristic != heuristic) or (ordonnancement and file_ordonnancement != ordonnancement):
             continue
 
         all_legend.append(f"{file_method}, {file_heuristic}, {file_ordonnancement}")        
@@ -67,10 +67,21 @@ def plot_data(folder_path, method=None, heuristic=None, ordonnancement=None):
         # Normalize total cost by the number of tasks
         mean_data[" Total cost"] = [cost / tasks if tasks != 0 else 0 for cost, tasks in zip(mean_data[" Total cost"], mean_data[" Number of tasks completed"])]
 
+        # Calculate the ratio of tasks completed
+        total_tasks = sum(mean_data[" Number of tasks completed"])
+        mean_data[" Task ratio"] = [tasks / total_tasks for tasks in mean_data[" Number of tasks completed"]]
+
         all_mean_data.append(mean_data)
         all_execution_time.append(execution_time)
 
-    # Plotting Number of tasks completed as histogram for all files
+    # Ensure "Random" method is last
+    if "Random" in [legend.split(",")[0] for legend in all_legend]:
+        random_index = [legend.split(",")[0] for legend in all_legend].index("Random")
+        all_mean_data.append(all_mean_data.pop(random_index))
+        all_execution_time.append(all_execution_time.pop(random_index))
+        all_legend.append(all_legend.pop(random_index))
+
+    # Plotting Task ratio as histogram for all files
     plt.figure()
     for i, mean_data in enumerate(all_mean_data):
         label = ""
@@ -80,8 +91,8 @@ def plot_data(folder_path, method=None, heuristic=None, ordonnancement=None):
             label += all_legend[i].split(",")[1]
         if not ordonnancement and heuristic != "Insert":
             label += all_legend[i].split(",")[2]
-        plt.bar([x + i * 0.2 for x in range(len(mean_data[" Number of tasks completed"]))], mean_data[" Number of tasks completed"], width=0.2, label=label, color=colors[i])
-    titre = "Number of tasks completed"
+        plt.bar([x + i * 0.2 for x in range(len(mean_data[" Task ratio"]))], mean_data[" Task ratio"], width=0.2, label=label, color=colors[i])
+    titre = "Ratio of tasks completed"
     if method:
         titre += " - Method: " + method
     if heuristic:
@@ -89,11 +100,11 @@ def plot_data(folder_path, method=None, heuristic=None, ordonnancement=None):
     if ordonnancement:
         titre += " - Ordonnancement: " + ordonnancement
     plt.title(titre)
-    plt.ylabel("Number of tasks")
+    plt.ylabel("Task ratio")
     plt.xlabel("Taxi")
-    plt.xticks(range(len(mean_data[" Number of tasks completed"])))  # Set x-axis to 0, 1, 2, etc.
+    plt.xticks(range(len(mean_data[" Task ratio"])))  # Set x-axis to 0, 1, 2, etc.
     plt.legend()
-    name = plot_folder+"number_of_tasks_completed_"+str(method)+"_"+str(heuristic)+"_"+str(ordonnancement)+".png"
+    name = plot_folder+"task_ratio_"+str(method)+"_"+str(heuristic)+"_"+str(ordonnancement)+".png"
     plt.savefig(name)
     plt.close()
     #plt.show()
@@ -193,9 +204,9 @@ def plot_data(folder_path, method=None, heuristic=None, ordonnancement=None):
         plt.close()
         #plt.show()
 
-# plot_data("datas/", method="SSI", heuristic=None, ordonnancement=None)
-# plot_data("datas/", method="PSI", heuristic=None, ordonnancement=None)
-# plot_data("datas/", method="Regret", heuristic=None, ordonnancement=None)
-# plot_data("datas/", method="Random", heuristic=None, ordonnancement=None)
+plot_data("datas/", method="SSI", heuristic=None, ordonnancement=None)
+plot_data("datas/", method="PSI", heuristic=None, ordonnancement=None)
+plot_data("datas/", method="Regret", heuristic=None, ordonnancement=None)
+plot_data("datas/", method="Random", heuristic=None, ordonnancement=None)
 plot_data("datas/", method=None, heuristic="Prim", ordonnancement="Glouton")
-# plot_data("datas/", method=None, heuristic="Insert", ordonnancement=None)
+plot_data("datas/", method=None, heuristic="Insert", ordonnancement=None)
