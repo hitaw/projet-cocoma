@@ -295,22 +295,31 @@ class auctioneer:
 
             #Domaines : taches, les valeurs sont les positions des tâches
             f.write("domains:\n")
-            f.write("  task:\n")
-            f.write("    values: [")
-            for task in tasks:
-                f.write(f"({task.departure}, {task.destination}), ")
-            f.write("]\n")
+            f.write("  task_domain:\n")
+            f.write("    values: [0, 1]\n") #0 : tâche non assignée, 1 : tâche assignée
+            f.write("    type: binary\n")
 
             #Variables : 1 variable associée à chaque taxi
             #Mais on part du principe que chaque taxi peut faire une tâche à la fois, alors que non ???? :c
             f.write("variables:\n")
-            for taxi in self.taxis:
-                f.write(f"  v_{taxi.id}:\n")
-                f.write("    domain: task\n")
+            for task in tasks:
+                f.write(f"  task_{task.id}:\n")
+                f.write("    domain: task_domain\n")
 
             #Contraintes 
             f.write("constraints:\n")
-            #???????????? la pos des taxis????
+            f.write("  c1:\n")
+            f.write("    type: intention\n")
+            f.write("    function: |\n")
+            fn = "      1000 if "
+            for task in tasks:
+                fn += f"task_{task.id} == 1 and "
+            fn = fn[:-5] + " else 0"
+            f.write(fn + "\n")
+
+            f.write("  c2:\n")
+            f.write("    type: intention\n")
+            f.write("    function: |\n")
             
             # Agents : les taxis
             f.write("agents:[")
@@ -457,10 +466,12 @@ class data_saver:
             self.ordonnancement = "Glouton"
         self.nb_run = 0
         self.data = [[] for _ in range(n_run)]
+        self.time_data = [0 for _ in range(n_run)]
 
-    def save_data(self):
+    def save_data(self, tmps:float):
         for taxi in self.taxis:
             self.data[self.nb_run].append((taxi.id, len(taxi.tasks_done), taxi.calculate_cost(taxi.tasks_done)))
+        self.time_data[self.nb_run] = tmps
         self.nb_run += 1
         
     def write_data(self, output_file):
@@ -492,6 +503,7 @@ class environnement:
         self.stop_simulation = False
         self.nb_run = 1
         self.n_run = n_run
+        self.temps = 0
 
     def step(self):
         generating_tasks = True
@@ -500,12 +512,16 @@ class environnement:
         if self.stop_condition == 2 and self.time >= self.stop_number:
             generating_tasks = False
 
+        if self.time == 0:
+            self.temps = time.time()
+
         if self.time % self.freq_tasks == 0 and generating_tasks:
             new_tasks = self.generate_task(self.n_tasks)
             self.auctioneer.auction(new_tasks)
 
         if not generating_tasks and self.tasks == []:
-            self.data_saver.save_data()
+            temps_run = time.time() - self.temps
+            self.data_saver.save_data(temps_run)
             if self.nb_run < self.n_run:
                 self.nb_run += 1
                 self.time = -5
@@ -576,7 +592,7 @@ class environnement:
     def next_position(self, position:tuple, destination:tuple):
         fx, fy = position
         dx, dy = destination
-        step_size = 0.5  # Détermine la vitesse de déplacement
+        step_size = 1  # Détermine la vitesse de déplacement
         vector_x = dx - fx
         vector_y = dy - fy
         distance = (vector_x**2 + vector_y**2)**0.5

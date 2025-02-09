@@ -1,0 +1,27 @@
+Method : Regret, Heuristic : Prim, Ordonnancement : None
+Taxi ID, Number of tasks completed, Total cost
+Run 1
+Execution time : 94.66885471343994
+0,9,352
+1,86,5412
+2,5,192
+Run 2
+Execution time : 112.07689547538757
+0,4,254
+1,93,6014
+2,3,202
+Run 3
+Execution time : 122.16133904457092
+0,94,6356
+1,5,252
+2,1,162
+Run 4
+Execution time : 97.33286547660828
+0,85,5834
+1,7,376
+2,8,438
+Run 5
+Execution time : 120.80732583999634
+0,7,258
+1,2,94
+2,91,6372

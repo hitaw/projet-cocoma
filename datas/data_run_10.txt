@@ -1,0 +1,27 @@
+Method : Regret, Heuristic : Insert, Ordonnancement : None
+Taxi ID, Number of tasks completed, Total cost
+Run 1
+Execution time : 57.208701372146606
+0,86,3514
+1,3,224
+2,11,644
+Run 2
+Execution time : 65.33663845062256
+0,6,412
+1,84,3668
+2,10,496
+Run 3
+Execution time : 49.444010496139526
+0,7,412
+1,19,1224
+2,74,3224
+Run 4
+Execution time : 54.198392391204834
+0,79,3426
+1,10,688
+2,11,702
+Run 5
+Execution time : 29.637554168701172
+0,14,754
+1,41,1848
+2,45,2072

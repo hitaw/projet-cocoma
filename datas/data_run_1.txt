@@ -1,13 +1,27 @@
+Method : Random, Heuristic : Prim, Ordonnancement : None
 Taxi ID, Number of tasks completed, Total cost
 Run 1
-0,31,1660
-1,36,1860
-2,33,1656
+Execution time : 39.905325412750244
+0,34,2576
+1,33,2476
+2,33,2412
 Run 2
-0,34,1878
-1,35,1882
-2,31,1780
+Execution time : 37.912856101989746
+0,38,2578
+1,30,1970
+2,32,2286
 Run 3
-0,32,1764
-1,35,1836
-2,33,1844
+Execution time : 39.889354944229126
+0,42,2610
+1,28,1906
+2,30,2274
+Run 4
+Execution time : 36.87095260620117
+0,38,2428
+1,37,2618
+2,25,1662
+Run 5
+Execution time : 35.40678381919861
+0,33,2464
+1,33,2074
+2,34,2042

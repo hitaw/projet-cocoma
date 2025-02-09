@@ -1,0 +1,27 @@
+Method : PSI, Heuristic : Prim, Ordonnancement : None
+Taxi ID, Number of tasks completed, Total cost
+Run 1
+Execution time : 110.14713716506958
+0,88,5878
+1,4,170
+2,8,352
+Run 2
+Execution time : 121.70281958580017
+0,2,90
+1,4,256
+2,94,6200
+Run 3
+Execution time : 116.58107662200928
+0,1,58
+1,93,6336
+2,6,298
+Run 4
+Execution time : 110.89697980880737
+0,7,294
+1,91,5944
+2,2,48
+Run 5
+Execution time : 52.947224855422974
+0,6,244
+1,50,3426
+2,44,2926

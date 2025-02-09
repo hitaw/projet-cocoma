@@ -1,0 +1,27 @@
+Method : SSI, Heuristic : Insert, Ordonnancement : None
+Taxi ID, Number of tasks completed, Total cost
+Run 1
+Execution time : 44.940672397613525
+0,9,556
+1,64,2952
+2,27,1344
+Run 2
+Execution time : 30.27196431159973
+0,31,1602
+1,29,1434
+2,40,1902
+Run 3
+Execution time : 32.45164346694946
+0,20,988
+1,42,2074
+2,38,1812
+Run 4
+Execution time : 55.82367706298828
+0,14,810
+1,75,3306
+2,11,792
+Run 5
+Execution time : 47.592238426208496
+0,71,3184
+1,19,1150
+2,10,414

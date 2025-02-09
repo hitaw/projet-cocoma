@@ -1,0 +1,27 @@
+Method : SSI, Heuristic : Prim, Ordonnancement : Glouton
+Taxi ID, Number of tasks completed, Total cost
+Run 1
+Execution time : 85.92345929145813
+0,93,4428
+1,4,262
+2,3,230
+Run 2
+Execution time : 73.0243980884552
+0,2,138
+1,5,236
+2,93,4200
+Run 3
+Execution time : 65.95786428451538
+0,88,3836
+1,10,458
+2,2,62
+Run 4
+Execution time : 67.27939891815186
+0,6,362
+1,5,310
+2,89,3954
+Run 5
+Execution time : 71.6902527809143
+0,2,178
+1,9,342
+2,89,4256

@@ -1,0 +1,27 @@
+Method : PSI, Heuristic : Insert, Ordonnancement : None
+Taxi ID, Number of tasks completed, Total cost
+Run 1
+Execution time : 85.29909682273865
+0,5,256
+1,90,4640
+2,5,322
+Run 2
+Execution time : 87.43875694274902
+0,4,192
+1,5,300
+2,91,4926
+Run 3
+Execution time : 78.35216808319092
+0,5,246
+1,86,4342
+2,9,548
+Run 4
+Execution time : 108.11478519439697
+0,3,170
+1,3,162
+2,94,5524
+Run 5
+Execution time : 85.48938751220703
+0,10,478
+1,87,4994
+2,3,204
