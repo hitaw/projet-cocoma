@@ -1,0 +1,123 @@
+name: dcop_tasks
+objective: min
+domains:
+  task_domain:
+    values: [Vide, t12, t13, t14, t15, t12t13, t12t14, t12t15, t13t14, t13t15, t14t15, t12t13t14, t12t13t15, t12t14t15, t13t14t15, t12t13t14t15]
+variables:
+  taxi_0:
+    domain: task_domain
+  taxi_1:
+    domain: task_domain
+  taxi_2:
+    domain: task_domain
+constraints:
+  cost_task:
+    type: extensional
+    function: |
+  0: Vide
+  82: t12
+  55: t13
+  133: t14
+  67: t15
+  132: t12t13
+  132: t12t13
+  209: t12t14
+  209: t12t14
+  143: t12t15
+  143: t12t15
+  145: t13t14
+  145: t13t14
+  119: t13t15
+  119: t13t15
+  189: t14t15
+  189: t14t15
+  259: t12t13t14
+  259: t12t13t14
+  259: t12t13t14
+  193: t12t13t15
+  193: t12t13t15
+  193: t12t13t15
+  265: t12t14t15
+  265: t12t14t15
+  265: t12t14t15
+  205: t13t14t15
+  205: t13t14t15
+  205: t13t14t15
+  315: t12t13t14t15
+  315: t12t13t14t15
+  315: t12t13t14t15
+  315: t12t13t14t15
+  0: Vide
+  97: t12
+  98: t13
+  90: t14
+  44: t15
+  164: t12t13
+  164: t12t13
+  199: t12t14
+  199: t12t14
+  117: t12t15
+  117: t12t15
+  162: t13t14
+  162: t13t14
+  110: t13t15
+  110: t13t15
+  166: t14t15
+  166: t14t15
+  239: t12t13t14
+  239: t12t13t14
+  239: t12t13t14
+  187: t12t13t15
+  187: t12t13t15
+  187: t12t13t15
+  244: t12t14t15
+  244: t12t14t15
+  244: t12t14t15
+  200: t13t14t15
+  200: t13t14t15
+  200: t13t14t15
+  314: t12t13t14t15
+  314: t12t13t14t15
+  314: t12t13t14t15
+  314: t12t13t14t15
+  0: Vide
+  81: t12
+  72: t13
+  116: t14
+  60: t15
+  149: t12t13
+  149: t12t13
+  208: t12t14
+  208: t12t14
+  133: t12t15
+  133: t12t15
+  162: t13t14
+  162: t13t14
+  136: t13t15
+  136: t13t15
+  182: t14t15
+  182: t14t15
+  276: t12t13t14
+  276: t12t13t14
+  276: t12t13t14
+  210: t12t13t15
+  210: t12t13t15
+  210: t12t13t15
+  260: t12t14t15
+  260: t12t14t15
+  260: t12t14t15
+  222: t13t14t15
+  222: t13t14t15
+  222: t13t14t15
+  332: t12t13t14t15
+  332: t12t13t14t15
+  332: t12t13t14t15
+  332: t12t13t14t15
+  too_many_assigned:
+    type: intention
+    function: |
+      100000 if (taxi_0 == t12 and taxi_0 == t12t13) or (taxi_0 == t12 and taxi_0 == t12t14) or (taxi_0 == t12 and taxi_0 == t12t15) or (taxi_0 == t12 and taxi_0 == t12t13t14) or (taxi_0 == t12 and taxi_0 == t12t13t15) or (taxi_0 == t12 and taxi_0 == t12t14t15) or (taxi_0 == t12 and taxi_0 == t12t13t14t15) or (taxi_0 == t13 and taxi_0 == t12t13) or (taxi_0 == t13 and taxi_0 == t13t14) or (taxi_0 == t13 and taxi_0 == t13t15) or (taxi_0 == t13 and taxi_0 == t12t13t14) or (taxi_0 == t13 and taxi_0 == t12t13t15) or (taxi_0 == t13 and taxi_0 == t13t14t15) or (taxi_0 == t13 and taxi_0 == t12t13t14t15) or (taxi_0 == t14 and taxi_0 == t12t14) or (taxi_0 == t14 and taxi_0 == t13t14) or (taxi_0 == t14 and taxi_0 == t14t15) or (taxi_0 == t14 and taxi_0 == t12t13t14) or (taxi_0 == t14 and taxi_0 == t12t14t15) or (taxi_0 == t14 and taxi_0 == t13t14t15) or (taxi_0 == t14 and taxi_0 == t12t13t14t15) or (taxi_0 == t15 and taxi_0 == t12t15) or (taxi_0 == t15 and taxi_0 == t13t15) or (taxi_0 == t15 and taxi_0 == t14t15) or (taxi_0 == t15 and taxi_0 == t12t13t15) or (taxi_0 == t15 and taxi_0 == t12t14t15) or (taxi_0 == t15 and taxi_0 == t13t14t15) or (taxi_0 == t15 and taxi_0 == t12t13t14t15) or (taxi_0 == t12t13 and taxi_0 == t12t13t14) or (taxi_0 == t12t13 and taxi_0 == t12t13t15) or (taxi_0 == t12t13 and taxi_0 == t12t13t14t15) or (taxi_0 == t12t14 and taxi_0 == t12t14t15) or (taxi_0 == t13t14 and taxi_0 == t12t13t14) or (taxi_0 == t13t14 and taxi_0 == t13t14t15) or (taxi_0 == t13t14 and taxi_0 == t12t13t14t15) or (taxi_0 == t13t15 and taxi_0 == t12t13t15) or (taxi_0 == t14t15 and taxi_0 == t12t14t15) or (taxi_0 == t14t15 and taxi_0 == t13t14t15) or (taxi_0 == t14t15 and taxi_0 == t12t13t14t15) or (taxi_0 == t12t13t14 and taxi_0 == t12t13t14t15) or (taxi_0 == t13t14t15 and taxi_0 == t12t13t14t15) or (taxi_0 == t12 and taxi_1 == t12t13) or (taxi_0 == t12 and taxi_1 == t12t14) or (taxi_0 == t12 and taxi_1 == t12t15) or (taxi_0 == t12 and taxi_1 == t12t13t14) or (taxi_0 == t12 and taxi_1 == t12t13t15) or (taxi_0 == t12 and taxi_1 == t12t14t15) or (taxi_0 == t12 and taxi_1 == t12t13t14t15) or (taxi_0 == t13 and taxi_1 == t12t13) or (taxi_0 == t13 and taxi_1 == t13t14) or (taxi_0 == t13 and taxi_1 == t13t15) or (taxi_0 == t13 and taxi_1 == t12t13t14) or (taxi_0 == t13 and taxi_1 == t12t13t15) or (taxi_0 == t13 and taxi_1 == t13t14t15) or (taxi_0 == t13 and taxi_1 == t12t13t14t15) or (taxi_0 == t14 and taxi_1 == t12t14) or (taxi_0 == t14 and taxi_1 == t13t14) or (taxi_0 == t14 and taxi_1 == t14t15) or (taxi_0 == t14 and taxi_1 == t12t13t14) or (taxi_0 == t14 and taxi_1 == t12t14t15) or (taxi_0 == t14 and taxi_1 == t13t14t15) or (taxi_0 == t14 and taxi_1 == t12t13t14t15) or (taxi_0 == t15 and taxi_1 == t12t15) or (taxi_0 == t15 and taxi_1 == t13t15) or (taxi_0 == t15 and taxi_1 == t14t15) or (taxi_0 == t15 and taxi_1 == t12t13t15) or (taxi_0 == t15 and taxi_1 == t12t14t15) or (taxi_0 == t15 and taxi_1 == t13t14t15) or (taxi_0 == t15 and taxi_1 == t12t13t14t15) or (taxi_0 == t12t13 and taxi_1 == t12t13t14) or (taxi_0 == t12t13 and taxi_1 == t12t13t15) or (taxi_0 == t12t13 and taxi_1 == t12t13t14t15) or (taxi_0 == t12t14 and taxi_1 == t12t14t15) or (taxi_0 == t13t14 and taxi_1 == t12t13t14) or (taxi_0 == t13t14 and taxi_1 == t13t14t15) or (taxi_0 == t13t14 and taxi_1 == t12t13t14t15) or (taxi_0 == t13t15 and taxi_1 == t12t13t15) or (taxi_0 == t14t15 and taxi_1 == t12t14t15) or (taxi_0 == t14t15 and taxi_1 == t13t14t15) or (taxi_0 == t14t15 and taxi_1 == t12t13t14t15) or (taxi_0 == t12t13t14 and taxi_1 == t12t13t14t15) or (taxi_0 == t13t14t15 and taxi_1 == t12t13t14t15) or (taxi_0 == t12 and taxi_2 == t12t13) or (taxi_0 == t12 and taxi_2 == t12t14) or (taxi_0 == t12 and taxi_2 == t12t15) or (taxi_0 == t12 and taxi_2 == t12t13t14) or (taxi_0 == t12 and taxi_2 == t12t13t15) or (taxi_0 == t12 and taxi_2 == t12t14t15) or (taxi_0 == t12 and taxi_2 == t12t13t14t15) or (taxi_0 == t13 and taxi_2 == t12t13) or (taxi_0 == t13 and taxi_2 == t13t14) or (taxi_0 == t13 and taxi_2 == t13t15) or (taxi_0 == t13 and taxi_2 == t12t13t14) or (taxi_0 == t13 and taxi_2 == t12t13t15) or (taxi_0 == t13 and taxi_2 == t13t14t15) or (taxi_0 == t13 and taxi_2 == t12t13t14t15) or (taxi_0 == t14 and taxi_2 == t12t14) or (taxi_0 == t14 and taxi_2 == t13t14) or (taxi_0 == t14 and taxi_2 == t14t15) or (taxi_0 == t14 and taxi_2 == t12t13t14) or (taxi_0 == t14 and taxi_2 == t12t14t15) or (taxi_0 == t14 and taxi_2 == t13t14t15) or (taxi_0 == t14 and taxi_2 == t12t13t14t15) or (taxi_0 == t15 and taxi_2 == t12t15) or (taxi_0 == t15 and taxi_2 == t13t15) or (taxi_0 == t15 and taxi_2 == t14t15) or (taxi_0 == t15 and taxi_2 == t12t13t15) or (taxi_0 == t15 and taxi_2 == t12t14t15) or (taxi_0 == t15 and taxi_2 == t13t14t15) or (taxi_0 == t15 and taxi_2 == t12t13t14t15) or (taxi_0 == t12t13 and taxi_2 == t12t13t14) or (taxi_0 == t12t13 and taxi_2 == t12t13t15) or (taxi_0 == t12t13 and taxi_2 == t12t13t14t15) or (taxi_0 == t12t14 and taxi_2 == t12t14t15) or (taxi_0 == t13t14 and taxi_2 == t12t13t14) or (taxi_0 == t13t14 and taxi_2 == t13t14t15) or (taxi_0 == t13t14 and taxi_2 == t12t13t14t15) or (taxi_0 == t13t15 and taxi_2 == t12t13t15) or (taxi_0 == t14t15 and taxi_2 == t12t14t15) or (taxi_0 == t14t15 and taxi_2 == t13t14t15) or (taxi_0 == t14t15 and taxi_2 == t12t13t14t15) or (taxi_0 == t12t13t14 and taxi_2 == t12t13t14t15) or (taxi_0 == t13t14t15 and taxi_2 == t12t13t14t15) or (taxi_1 == t12 and taxi_0 == t12t13) or (taxi_1 == t12 and taxi_0 == t12t14) or (taxi_1 == t12 and taxi_0 == t12t15) or (taxi_1 == t12 and taxi_0 == t12t13t14) or (taxi_1 == t12 and taxi_0 == t12t13t15) or (taxi_1 == t12 and taxi_0 == t12t14t15) or (taxi_1 == t12 and taxi_0 == t12t13t14t15) or (taxi_1 == t13 and taxi_0 == t12t13) or (taxi_1 == t13 and taxi_0 == t13t14) or (taxi_1 == t13 and taxi_0 == t13t15) or (taxi_1 == t13 and taxi_0 == t12t13t14) or (taxi_1 == t13 and taxi_0 == t12t13t15) or (taxi_1 == t13 and taxi_0 == t13t14t15) or (taxi_1 == t13 and taxi_0 == t12t13t14t15) or (taxi_1 == t14 and taxi_0 == t12t14) or (taxi_1 == t14 and taxi_0 == t13t14) or (taxi_1 == t14 and taxi_0 == t14t15) or (taxi_1 == t14 and taxi_0 == t12t13t14) or (taxi_1 == t14 and taxi_0 == t12t14t15) or (taxi_1 == t14 and taxi_0 == t13t14t15) or (taxi_1 == t14 and taxi_0 == t12t13t14t15) or (taxi_1 == t15 and taxi_0 == t12t15) or (taxi_1 == t15 and taxi_0 == t13t15) or (taxi_1 == t15 and taxi_0 == t14t15) or (taxi_1 == t15 and taxi_0 == t12t13t15) or (taxi_1 == t15 and taxi_0 == t12t14t15) or (taxi_1 == t15 and taxi_0 == t13t14t15) or (taxi_1 == t15 and taxi_0 == t12t13t14t15) or (taxi_1 == t12t13 and taxi_0 == t12t13t14) or (taxi_1 == t12t13 and taxi_0 == t12t13t15) or (taxi_1 == t12t13 and taxi_0 == t12t13t14t15) or (taxi_1 == t12t14 and taxi_0 == t12t14t15) or (taxi_1 == t13t14 and taxi_0 == t12t13t14) or (taxi_1 == t13t14 and taxi_0 == t13t14t15) or (taxi_1 == t13t14 and taxi_0 == t12t13t14t15) or (taxi_1 == t13t15 and taxi_0 == t12t13t15) or (taxi_1 == t14t15 and taxi_0 == t12t14t15) or (taxi_1 == t14t15 and taxi_0 == t13t14t15) or (taxi_1 == t14t15 and taxi_0 == t12t13t14t15) or (taxi_1 == t12t13t14 and taxi_0 == t12t13t14t15) or (taxi_1 == t13t14t15 and taxi_0 == t12t13t14t15) or (taxi_1 == t12 and taxi_1 == t12t13) or (taxi_1 == t12 and taxi_1 == t12t14) or (taxi_1 == t12 and taxi_1 == t12t15) or (taxi_1 == t12 and taxi_1 == t12t13t14) or (taxi_1 == t12 and taxi_1 == t12t13t15) or (taxi_1 == t12 and taxi_1 == t12t14t15) or (taxi_1 == t12 and taxi_1 == t12t13t14t15) or (taxi_1 == t13 and taxi_1 == t12t13) or (taxi_1 == t13 and taxi_1 == t13t14) or (taxi_1 == t13 and taxi_1 == t13t15) or (taxi_1 == t13 and taxi_1 == t12t13t14) or (taxi_1 == t13 and taxi_1 == t12t13t15) or (taxi_1 == t13 and taxi_1 == t13t14t15) or (taxi_1 == t13 and taxi_1 == t12t13t14t15) or (taxi_1 == t14 and taxi_1 == t12t14) or (taxi_1 == t14 and taxi_1 == t13t14) or (taxi_1 == t14 and taxi_1 == t14t15) or (taxi_1 == t14 and taxi_1 == t12t13t14) or (taxi_1 == t14 and taxi_1 == t12t14t15) or (taxi_1 == t14 and taxi_1 == t13t14t15) or (taxi_1 == t14 and taxi_1 == t12t13t14t15) or (taxi_1 == t15 and taxi_1 == t12t15) or (taxi_1 == t15 and taxi_1 == t13t15) or (taxi_1 == t15 and taxi_1 == t14t15) or (taxi_1 == t15 and taxi_1 == t12t13t15) or (taxi_1 == t15 and taxi_1 == t12t14t15) or (taxi_1 == t15 and taxi_1 == t13t14t15) or (taxi_1 == t15 and taxi_1 == t12t13t14t15) or (taxi_1 == t12t13 and taxi_1 == t12t13t14) or (taxi_1 == t12t13 and taxi_1 == t12t13t15) or (taxi_1 == t12t13 and taxi_1 == t12t13t14t15) or (taxi_1 == t12t14 and taxi_1 == t12t14t15) or (taxi_1 == t13t14 and taxi_1 == t12t13t14) or (taxi_1 == t13t14 and taxi_1 == t13t14t15) or (taxi_1 == t13t14 and taxi_1 == t12t13t14t15) or (taxi_1 == t13t15 and taxi_1 == t12t13t15) or (taxi_1 == t14t15 and taxi_1 == t12t14t15) or (taxi_1 == t14t15 and taxi_1 == t13t14t15) or (taxi_1 == t14t15 and taxi_1 == t12t13t14t15) or (taxi_1 == t12t13t14 and taxi_1 == t12t13t14t15) or (taxi_1 == t13t14t15 and taxi_1 == t12t13t14t15) or (taxi_1 == t12 and taxi_2 == t12t13) or (taxi_1 == t12 and taxi_2 == t12t14) or (taxi_1 == t12 and taxi_2 == t12t15) or (taxi_1 == t12 and taxi_2 == t12t13t14) or (taxi_1 == t12 and taxi_2 == t12t13t15) or (taxi_1 == t12 and taxi_2 == t12t14t15) or (taxi_1 == t12 and taxi_2 == t12t13t14t15) or (taxi_1 == t13 and taxi_2 == t12t13) or (taxi_1 == t13 and taxi_2 == t13t14) or (taxi_1 == t13 and taxi_2 == t13t15) or (taxi_1 == t13 and taxi_2 == t12t13t14) or (taxi_1 == t13 and taxi_2 == t12t13t15) or (taxi_1 == t13 and taxi_2 == t13t14t15) or (taxi_1 == t13 and taxi_2 == t12t13t14t15) or (taxi_1 == t14 and taxi_2 == t12t14) or (taxi_1 == t14 and taxi_2 == t13t14) or (taxi_1 == t14 and taxi_2 == t14t15) or (taxi_1 == t14 and taxi_2 == t12t13t14) or (taxi_1 == t14 and taxi_2 == t12t14t15) or (taxi_1 == t14 and taxi_2 == t13t14t15) or (taxi_1 == t14 and taxi_2 == t12t13t14t15) or (taxi_1 == t15 and taxi_2 == t12t15) or (taxi_1 == t15 and taxi_2 == t13t15) or (taxi_1 == t15 and taxi_2 == t14t15) or (taxi_1 == t15 and taxi_2 == t12t13t15) or (taxi_1 == t15 and taxi_2 == t12t14t15) or (taxi_1 == t15 and taxi_2 == t13t14t15) or (taxi_1 == t15 and taxi_2 == t12t13t14t15) or (taxi_1 == t12t13 and taxi_2 == t12t13t14) or (taxi_1 == t12t13 and taxi_2 == t12t13t15) or (taxi_1 == t12t13 and taxi_2 == t12t13t14t15) or (taxi_1 == t12t14 and taxi_2 == t12t14t15) or (taxi_1 == t13t14 and taxi_2 == t12t13t14) or (taxi_1 == t13t14 and taxi_2 == t13t14t15) or (taxi_1 == t13t14 and taxi_2 == t12t13t14t15) or (taxi_1 == t13t15 and taxi_2 == t12t13t15) or (taxi_1 == t14t15 and taxi_2 == t12t14t15) or (taxi_1 == t14t15 and taxi_2 == t13t14t15) or (taxi_1 == t14t15 and taxi_2 == t12t13t14t15) or (taxi_1 == t12t13t14 and taxi_2 == t12t13t14t15) or (taxi_1 == t13t14t15 and taxi_2 == t12t13t14t15) or (taxi_2 == t12 and taxi_0 == t12t13) or (taxi_2 == t12 and taxi_0 == t12t14) or (taxi_2 == t12 and taxi_0 == t12t15) or (taxi_2 == t12 and taxi_0 == t12t13t14) or (taxi_2 == t12 and taxi_0 == t12t13t15) or (taxi_2 == t12 and taxi_0 == t12t14t15) or (taxi_2 == t12 and taxi_0 == t12t13t14t15) or (taxi_2 == t13 and taxi_0 == t12t13) or (taxi_2 == t13 and taxi_0 == t13t14) or (taxi_2 == t13 and taxi_0 == t13t15) or (taxi_2 == t13 and taxi_0 == t12t13t14) or (taxi_2 == t13 and taxi_0 == t12t13t15) or (taxi_2 == t13 and taxi_0 == t13t14t15) or (taxi_2 == t13 and taxi_0 == t12t13t14t15) or (taxi_2 == t14 and taxi_0 == t12t14) or (taxi_2 == t14 and taxi_0 == t13t14) or (taxi_2 == t14 and taxi_0 == t14t15) or (taxi_2 == t14 and taxi_0 == t12t13t14) or (taxi_2 == t14 and taxi_0 == t12t14t15) or (taxi_2 == t14 and taxi_0 == t13t14t15) or (taxi_2 == t14 and taxi_0 == t12t13t14t15) or (taxi_2 == t15 and taxi_0 == t12t15) or (taxi_2 == t15 and taxi_0 == t13t15) or (taxi_2 == t15 and taxi_0 == t14t15) or (taxi_2 == t15 and taxi_0 == t12t13t15) or (taxi_2 == t15 and taxi_0 == t12t14t15) or (taxi_2 == t15 and taxi_0 == t13t14t15) or (taxi_2 == t15 and taxi_0 == t12t13t14t15) or (taxi_2 == t12t13 and taxi_0 == t12t13t14) or (taxi_2 == t12t13 and taxi_0 == t12t13t15) or (taxi_2 == t12t13 and taxi_0 == t12t13t14t15) or (taxi_2 == t12t14 and taxi_0 == t12t14t15) or (taxi_2 == t13t14 and taxi_0 == t12t13t14) or (taxi_2 == t13t14 and taxi_0 == t13t14t15) or (taxi_2 == t13t14 and taxi_0 == t12t13t14t15) or (taxi_2 == t13t15 and taxi_0 == t12t13t15) or (taxi_2 == t14t15 and taxi_0 == t12t14t15) or (taxi_2 == t14t15 and taxi_0 == t13t14t15) or (taxi_2 == t14t15 and taxi_0 == t12t13t14t15) or (taxi_2 == t12t13t14 and taxi_0 == t12t13t14t15) or (taxi_2 == t13t14t15 and taxi_0 == t12t13t14t15) or (taxi_2 == t12 and taxi_1 == t12t13) or (taxi_2 == t12 and taxi_1 == t12t14) or (taxi_2 == t12 and taxi_1 == t12t15) or (taxi_2 == t12 and taxi_1 == t12t13t14) or (taxi_2 == t12 and taxi_1 == t12t13t15) or (taxi_2 == t12 and taxi_1 == t12t14t15) or (taxi_2 == t12 and taxi_1 == t12t13t14t15) or (taxi_2 == t13 and taxi_1 == t12t13) or (taxi_2 == t13 and taxi_1 == t13t14) or (taxi_2 == t13 and taxi_1 == t13t15) or (taxi_2 == t13 and taxi_1 == t12t13t14) or (taxi_2 == t13 and taxi_1 == t12t13t15) or (taxi_2 == t13 and taxi_1 == t13t14t15) or (taxi_2 == t13 and taxi_1 == t12t13t14t15) or (taxi_2 == t14 and taxi_1 == t12t14) or (taxi_2 == t14 and taxi_1 == t13t14) or (taxi_2 == t14 and taxi_1 == t14t15) or (taxi_2 == t14 and taxi_1 == t12t13t14) or (taxi_2 == t14 and taxi_1 == t12t14t15) or (taxi_2 == t14 and taxi_1 == t13t14t15) or (taxi_2 == t14 and taxi_1 == t12t13t14t15) or (taxi_2 == t15 and taxi_1 == t12t15) or (taxi_2 == t15 and taxi_1 == t13t15) or (taxi_2 == t15 and taxi_1 == t14t15) or (taxi_2 == t15 and taxi_1 == t12t13t15) or (taxi_2 == t15 and taxi_1 == t12t14t15) or (taxi_2 == t15 and taxi_1 == t13t14t15) or (taxi_2 == t15 and taxi_1 == t12t13t14t15) or (taxi_2 == t12t13 and taxi_1 == t12t13t14) or (taxi_2 == t12t13 and taxi_1 == t12t13t15) or (taxi_2 == t12t13 and taxi_1 == t12t13t14t15) or (taxi_2 == t12t14 and taxi_1 == t12t14t15) or (taxi_2 == t13t14 and taxi_1 == t12t13t14) or (taxi_2 == t13t14 and taxi_1 == t13t14t15) or (taxi_2 == t13t14 and taxi_1 == t12t13t14t15) or (taxi_2 == t13t15 and taxi_1 == t12t13t15) or (taxi_2 == t14t15 and taxi_1 == t12t14t15) or (taxi_2 == t14t15 and taxi_1 == t13t14t15) or (taxi_2 == t14t15 and taxi_1 == t12t13t14t15) or (taxi_2 == t12t13t14 and taxi_1 == t12t13t14t15) or (taxi_2 == t13t14t15 and taxi_1 == t12t13t14t15) or (taxi_2 == t12 and taxi_2 == t12t13) or (taxi_2 == t12 and taxi_2 == t12t14) or (taxi_2 == t12 and taxi_2 == t12t15) or (taxi_2 == t12 and taxi_2 == t12t13t14) or (taxi_2 == t12 and taxi_2 == t12t13t15) or (taxi_2 == t12 and taxi_2 == t12t14t15) or (taxi_2 == t12 and taxi_2 == t12t13t14t15) or (taxi_2 == t13 and taxi_2 == t12t13) or (taxi_2 == t13 and taxi_2 == t13t14) or (taxi_2 == t13 and taxi_2 == t13t15) or (taxi_2 == t13 and taxi_2 == t12t13t14) or (taxi_2 == t13 and taxi_2 == t12t13t15) or (taxi_2 == t13 and taxi_2 == t13t14t15) or (taxi_2 == t13 and taxi_2 == t12t13t14t15) or (taxi_2 == t14 and taxi_2 == t12t14) or (taxi_2 == t14 and taxi_2 == t13t14) or (taxi_2 == t14 and taxi_2 == t14t15) or (taxi_2 == t14 and taxi_2 == t12t13t14) or (taxi_2 == t14 and taxi_2 == t12t14t15) or (taxi_2 == t14 and taxi_2 == t13t14t15) or (taxi_2 == t14 and taxi_2 == t12t13t14t15) or (taxi_2 == t15 and taxi_2 == t12t15) or (taxi_2 == t15 and taxi_2 == t13t15) or (taxi_2 == t15 and taxi_2 == t14t15) or (taxi_2 == t15 and taxi_2 == t12t13t15) or (taxi_2 == t15 and taxi_2 == t12t14t15) or (taxi_2 == t15 and taxi_2 == t13t14t15) or (taxi_2 == t15 and taxi_2 == t12t13t14t15) or (taxi_2 == t12t13 and taxi_2 == t12t13t14) or (taxi_2 == t12t13 and taxi_2 == t12t13t15) or (taxi_2 == t12t13 and taxi_2 == t12t13t14t15) or (taxi_2 == t12t14 and taxi_2 == t12t14t15) or (taxi_2 == t13t14 and taxi_2 == t12t13t14) or (taxi_2 == t13t14 and taxi_2 == t13t14t15) or (taxi_2 == t13t14 and taxi_2 == t12t13t14t15) or (taxi_2 == t13t15 and taxi_2 == t12t13t15) or (taxi_2 == t14t15 and taxi_2 == t12t14t15) or (taxi_2 == t14t15 and taxi_2 == t13t14t15) or (taxi_2 == t14t15 and taxi_2 == t12t13t14t15) or (taxi_2 == t12t13t14 and taxi_2 == t12t13t14t15) or (taxi_2 == t13t14t15 and taxi_2 == t12t13t14t15) else 0
+  not_every_task_assigned:
+    type: intention
+    function: |
+      100000 if (taxi_0 != t12 and taxi_1 != t12 and taxi_2 != t12 and taxi_0 != t12t13 and taxi_1 != t12t13 and taxi_2 != t12t13 and taxi_0 != t12t14 and taxi_1 != t12t14 and taxi_2 != t12t14 and taxi_0 != t12t15 and taxi_1 != t12t15 and taxi_2 != t12t15 and taxi_0 != t12t13t14 and taxi_1 != t12t13t14 and taxi_2 != t12t13t14 and taxi_0 != t12t13t15 and taxi_1 != t12t13t15 and taxi_2 != t12t13t15 and taxi_0 != t12t14t15 and taxi_1 != t12t14t15 and taxi_2 != t12t14t15 and taxi_0 != t12t13t14t15 and taxi_1 != t12t13t14t15 and taxi_2 != t12t13t14t15 ) or taxi_0 != t13 and taxi_1 != t13 and taxi_2 != t13 and taxi_0 != t12t13 and taxi_1 != t12t13 and taxi_2 != t12t13 and taxi_0 != t13t14 and taxi_1 != t13t14 and taxi_2 != t13t14 and taxi_0 != t13t15 and taxi_1 != t13t15 and taxi_2 != t13t15 and taxi_0 != t12t13t14 and taxi_1 != t12t13t14 and taxi_2 != t12t13t14 and taxi_0 != t12t13t15 and taxi_1 != t12t13t15 and taxi_2 != t12t13t15 and taxi_0 != t13t14t15 and taxi_1 != t13t14t15 and taxi_2 != t13t14t15 and taxi_0 != t12t13t14t15 and taxi_1 != t12t13t14t15 and taxi_2 != t12t13t14t15 ) or taxi_0 != t14 and taxi_1 != t14 and taxi_2 != t14 and taxi_0 != t12t14 and taxi_1 != t12t14 and taxi_2 != t12t14 and taxi_0 != t13t14 and taxi_1 != t13t14 and taxi_2 != t13t14 and taxi_0 != t14t15 and taxi_1 != t14t15 and taxi_2 != t14t15 and taxi_0 != t12t13t14 and taxi_1 != t12t13t14 and taxi_2 != t12t13t14 and taxi_0 != t12t14t15 and taxi_1 != t12t14t15 and taxi_2 != t12t14t15 and taxi_0 != t13t14t15 and taxi_1 != t13t14t15 and taxi_2 != t13t14t15 and taxi_0 != t12t13t14t15 and taxi_1 != t12t13t14t15 and taxi_2 != t12t13t14t15 ) or taxi_0 != t15 and taxi_1 != t15 and taxi_2 != t15 and taxi_0 != t12t15 and taxi_1 != t12t15 and taxi_2 != t12t15 and taxi_0 != t13t15 and taxi_1 != t13t15 and taxi_2 != t13t15 and taxi_0 != t14t15 and taxi_1 != t14t15 and taxi_2 != t14t15 and taxi_0 != t12t13t15 and taxi_1 != t12t13t15 and taxi_2 != t12t13t15 and taxi_0 != t12t14t15 and taxi_1 != t12t14t15 and taxi_2 != t12t14t15 and taxi_0 != t13t14t15 and taxi_1 != t13t14t15 and taxi_2 != t13t14t15 and taxi_0 != t12t13t14t15 and taxi_1 != t12t13t14t15 and taxi_2 != t12t13t14t15 ) else 0
