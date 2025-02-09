@@ -247,11 +247,9 @@ class auctioneer:
             self.random_assignation(tasks)
 
         elif self.method == 1: #DCOP
-            costs = {task: {taxi: abs(task.departure[0] - taxi.position[0]) + abs(task.departure[1] - taxi.position[1]) for taxi in self.taxis} for task in tasks}
-            self.generate_dcop(tasks, costs, {taxi: 0 for taxi in self.taxis})
-            sol = self.dcop_assignation(tasks)
+            self.generate_dcop(tasks)
+            sol = self.dcop_assignation()
             print(f"Solution du DCOP : {sol}")
-            print(5/0)
 
         elif self.method == 2: #PSI
             self.parallel_single_item_auction(tasks)
@@ -296,49 +294,93 @@ class auctioneer:
             #Domaines : taches, les valeurs sont les positions des tâches
             f.write("domains:\n")
             f.write("  task_domain:\n")
-            f.write("    values: [0, 1]\n") #0 : tâche non assignée, 1 : tâche assignée
-            f.write("    type: binary\n")
+            f.write("    values: [")
+            ids = ["t" + str(task.id) for task in tasks]
+            combinaisons = []
+            for i in range(len(tasks) + 1):
+                for comb in itertools.combinations(ids, i):
+                    #on veut ecrire sous la forme t1, t1t2, t1t3
+                    if comb == ():
+                        combinaisons.append("Vide")
+                    else:
+                        combinaisons.append("".join(comb))
+            f.write(", ".join(combinaisons))
+            f.write("]\n")
 
             #Variables : 1 variable associée à chaque taxi
-            #Mais on part du principe que chaque taxi peut faire une tâche à la fois, alors que non ???? :c
             f.write("variables:\n")
-            for task in tasks:
-                f.write(f"  task_{task.id}:\n")
+            variables = [f"taxi_{taxi.id}" for taxi in self.taxis]
+            for var in variables:
+                f.write(f"  {var}:\n")
                 f.write("    domain: task_domain\n")
 
             #Contraintes 
             f.write("constraints:\n")
-            f.write("  c1:\n")
-            f.write("    type: intention\n")
-            f.write("    function: |\n")
-            fn = "      1000 if "
-            for task in tasks:
-                fn += f"task_{task.id} == 1 and "
-            fn = fn[:-5] + " else 0"
-            f.write(fn + "\n")
-
-            f.write("  c2:\n")
-            f.write("    type: intention\n")
-            f.write("    function: |\n")
             
-            # Agents : les taxis
-            f.write("agents:[")
+            f.write("  cost_task:\n")
+            f.write("    type: extensional\n")
+            f.write("    function: |\n")
+            fn = ""
             for taxi in self.taxis:
-                f.write(f"taxi_{taxi.id}, ")
-            f.write("]\n")
+                actual_cost = taxi.calculate_cost(taxi.tasks)
+                fn += f'  {actual_cost}: Vide\n'
+                for comb in combinaisons:
+                    for task in tasks:
+                        if comb != "Vide" and (f"t{task.id}" in comb):
+                            tasks_to_add = [task for task in tasks if f"t{task.id}" in comb]
+                            position = taxi.position
+                            taxi_tasks = taxi.tasks
+                            if taxi.is_on_task:
+                                position = taxi.tasks[0].destination
+                                taxi_tasks = taxi.tasks[1:]
+                            path = taxi.glouton(taxi_tasks + tasks_to_add, position)
+                            cost = taxi.calculate_cost(path)
+                            fn += f'  {cost}: {comb}\n'
+            f.write(fn)
+
+            f.write("  too_many_assigned:\n")
+            f.write("    type: intention\n")
+            f.write("    function: |\n")
+            fn = "      100000 if "
+            #Si une tâche est assignée + d'une fois : pénalité
+            for var in variables:
+                for var2 in variables:
+                    for comb in combinaisons:
+                        for comb2 in combinaisons:
+                            if comb != comb2 and comb != "Vide" and comb2 != "Vide" and (comb in comb2):
+                                fn += f"({var} == {comb} and {var2} == {comb2}) or "
+
+            fn = fn[:-4]
+            f.write(fn + " else 0\n")
+
+            f.write("  not_every_task_assigned:\n")
+            f.write("    type: intention\n")
+            f.write("    function: |\n")
+            fn = "      100000 if ("
+            for id in ids:
+                for comb in combinaisons:
+                    if comb != "Vide" and (id in comb):
+                        for var in variables:
+                            fn += f"{var} != {comb} and "
+                fn = fn[:-4]
+                fn += ") or "
+            fn = fn[:-4]
+            f.write(fn + " else 0\n")
     
     def dcop_assignation(self, file_path="dcop_tasks.yaml", algorithm="dpop"):
         """
         Assigns tasks to taxis using a DCOP
         """
         try:
+            folder = "dcop_files"
             # Vérifier si le fichier YAML est valide
-            with open(file_path, "r") as f:
+            with open(folder + "\\" + file_path, "r") as f:
                 dcop_data = yaml.safe_load(f)
 
             print(f"Fichier DCOP chargé : {file_path}")
             
             # Commande Pydcop pour résoudre le DCOP
+            subprocess.run(["cd", "dcop_files"], capture_output=True, text=True)
             command = ["pydcop", "solve", "--algo", algorithm, file_path]
             print(f"Exécution de Pydcop avec l'algorithme {algorithm}...")
 

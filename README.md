@@ -6,7 +6,6 @@ Projet de l'UE CoCoMa du Master ANDROIDE (Sorbonne Université)
 
 Todo :
 
-- Méthodes d'ordonnancement de tâches
 - Affichage avec print
 
 # Partie 2 :
@@ -20,6 +19,5 @@ Todo :
 Todo :
 
 - CBBA
-- Récupérer les résultats
 - Analyse
 - Rapport
