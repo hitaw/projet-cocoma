@@ -276,7 +276,7 @@ class auctioneer:
             winner = random.choice(self.taxis)
             winner.assign(task_to_assign)
 
-    def generate_dcop(self, tasks, output_file="dcop_files/dcop_tasks.yaml"):
+    def generate_dcop(self, tasks, output_file="dcop_files/dcop_tasks.yml"):
         """
         Génère un fichier YAML pour un problème d'allocation de tâches entre taxis en DCOP.
         
@@ -367,20 +367,18 @@ class auctioneer:
             fn = fn[:-4]
             f.write(fn + " else 0\n")
     
-    def dcop_assignation(self, file_path="dcop_tasks.yaml", algorithm="dpop"):
+    def dcop_assignation(self, file_path="dcop_files\dcop_tasks.yml", algorithm="dpop"):
         """
         Assigns tasks to taxis using a DCOP
         """
         try:
-            folder = "dcop_files"
             # Vérifier si le fichier YAML est valide
-            with open(folder + "\\" + file_path, "r") as f:
+            with open(file_path, "r") as f:
                 dcop_data = yaml.safe_load(f)
 
             print(f"Fichier DCOP chargé : {file_path}")
             
             # Commande Pydcop pour résoudre le DCOP
-            subprocess.run(["cd", "dcop_files"], capture_output=True, text=True)
             command = ["pydcop", "solve", "--algo", algorithm, file_path]
             print(f"Exécution de Pydcop avec l'algorithme {algorithm}...")
 
