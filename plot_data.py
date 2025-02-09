@@ -2,13 +2,16 @@ import os
 import matplotlib.pyplot as plt
 
 def plot_data(folder_path, method=None, heuristic=None, ordonnancement=None):
+    plot_folder = "plots/"
     files = [os.path.join(folder_path, f) for f in os.listdir(folder_path) if os.path.isfile(os.path.join(folder_path, f))]
-    
+
     all_mean_data = []
     all_execution_time = []
     all_legend = []
-    
-    for file_path in files:
+
+    colors = plt.cm.get_cmap('tab10', len(files)).colors  # Get a list of colors
+
+    for file_index, file_path in enumerate(files):
         with open(file_path, "r") as file:
             data = file.readlines()
 
@@ -19,7 +22,7 @@ def plot_data(folder_path, method=None, heuristic=None, ordonnancement=None):
         file_ordonnancement = title.split(",")[2].split(":")[-1].strip()
 
         # Filter based on method, heuristic, and ordonnancement
-        if (method and file_method != method) or (heuristic and file_heuristic != heuristic) or (ordonnancement and file_ordonnancement != ordonnancement):
+        if (method and file_method != method) or (heuristic and file_heuristic != heuristic) or (ordonnancement and file_ordonnancement != ordonnancement) or (method == "Random"):
             continue
 
         all_legend.append(f"{file_method}, {file_heuristic}, {file_ordonnancement}")        
@@ -61,54 +64,138 @@ def plot_data(folder_path, method=None, heuristic=None, ordonnancement=None):
         for key in header:
             mean_data[key] = [mean_data[key][i] for i in sorted_indices]
 
+        # Normalize total cost by the number of tasks
+        mean_data[" Total cost"] = [cost / tasks if tasks != 0 else 0 for cost, tasks in zip(mean_data[" Total cost"], mean_data[" Number of tasks completed"])]
+
         all_mean_data.append(mean_data)
-        all_execution_time.append(sum(execution_time) / len(execution_time))
+        all_execution_time.append(execution_time)
 
     # Plotting Number of tasks completed as histogram for all files
     plt.figure()
     for i, mean_data in enumerate(all_mean_data):
-        label = all_legend[i]
-        plt.bar([x + i * 0.2 for x in range(len(mean_data[" Number of tasks completed"]))], mean_data[" Number of tasks completed"], width=0.2, label=label)
-    plt.title("Number of tasks completed")
+        label = ""
+        if not method:
+            label += all_legend[i].split(",")[0]
+        if not heuristic:
+            label += all_legend[i].split(",")[1]
+        if not ordonnancement and heuristic != "Insert":
+            label += all_legend[i].split(",")[2]
+        plt.bar([x + i * 0.2 for x in range(len(mean_data[" Number of tasks completed"]))], mean_data[" Number of tasks completed"], width=0.2, label=label, color=colors[i])
+    titre = "Number of tasks completed"
+    if method:
+        titre += " - Method: " + method
+    if heuristic:
+        titre += " - Heuristic: " + heuristic
+    if ordonnancement:
+        titre += " - Ordonnancement: " + ordonnancement
+    plt.title(titre)
     plt.ylabel("Number of tasks")
     plt.xlabel("Taxi")
+    plt.xticks(range(len(mean_data[" Number of tasks completed"])))  # Set x-axis to 0, 1, 2, etc.
     plt.legend()
-    plt.show()
+    name = plot_folder+"number_of_tasks_completed_"+str(method)+"_"+str(heuristic)+"_"+str(ordonnancement)+".png"
+    plt.savefig(name)
+    plt.close()
+    #plt.show()
 
     # Plotting Total cost as histogram for all files
     plt.figure()
     for i, mean_data in enumerate(all_mean_data):
-        label = all_legend[i]
-        plt.bar([x + i * 0.2 for x in range(len(mean_data[" Total cost"]))], mean_data[" Total cost"], width=0.2, label=label)
-    plt.title("Total cost of tasks")
+        label = ""
+        if not method:
+            label += all_legend[i].split(",")[0]
+        if not heuristic:
+            label += all_legend[i].split(",")[1]
+        if not ordonnancement and heuristic != "Insert":
+            label += all_legend[i].split(",")[2]
+        plt.bar([x + i * 0.2 for x in range(len(mean_data[" Total cost"]))], mean_data[" Total cost"], width=0.2, label=label, color=colors[i])
+    titre = "Total cost of tasks"
+    if method:
+        titre += " - Method: " + method
+    if heuristic:
+        titre += " - Heuristic: " + heuristic
+    if ordonnancement:
+        titre += " - Ordonnancement: " + ordonnancement
+    plt.title(titre)
     plt.ylabel("Cost")
     plt.xlabel("Taxi")
     plt.legend()
-    plt.show()
+    name = plot_folder+"total_cost_"+str(method)+"_"+str(heuristic)+"_"+str(ordonnancement)+".png"
+    plt.savefig(name)
+    plt.close()
+    #plt.show()
 
-    # Execution time
-    
+    # Execution time as box plot
     plt.figure()
-    plt.bar(all_legend, all_execution_time)
-    plt.title("Execution time")
+    labels = []
+    for i, mean_data in enumerate(all_mean_data):
+        lab = ""
+        if not method:
+            lab += all_legend[i].split(",")[0]
+        if not heuristic:
+            lab += all_legend[i].split(",")[1]
+        if not ordonnancement and heuristic != "Insert":
+            lab += all_legend[i].split(",")[2]
+        labels.append(lab)
+    
+    plt.boxplot(all_execution_time, labels=labels)
+    titre = "Execution time"
+    if method:
+        titre += " - Method: " + method
+    if heuristic:
+        titre += " - Heuristic: " + heuristic
+    if ordonnancement:
+        titre += " - Ordonnancement: " + ordonnancement
+    plt.title(titre)
     plt.ylabel("Time (s)")
     plt.xlabel("Configuration")
-    plt.show()
+    name = plot_folder+"execution_time_"+str(method)+"_"+str(heuristic)+"_"+str(ordonnancement)+".png"
+    plt.savefig(name)
+    plt.close()
+    #plt.show()
 
     # Plot total cost of tasks as a single bar for each configuration
     plt.figure()
     total_costs = [sum(mean_data[" Total cost"]) for mean_data in all_mean_data]
-    plt.bar(all_legend, total_costs)
-    plt.title("Total cost of tasks")
+    labels = []
+    for i, mean_data in enumerate(all_mean_data):
+        lab = ""
+        if not method:
+            lab += all_legend[i].split(",")[0]
+        if not heuristic:
+            lab += all_legend[i].split(",")[1]
+        if not ordonnancement and heuristic != "Insert":
+            lab += all_legend[i].split(",")[2]
+        labels.append(lab)
+    plt.bar(labels, total_costs, color=colors[:len(all_legend)])
+    titre = "Average cost for one task"
+    if method:
+        titre += " - Method: " + method
+    if heuristic:
+        titre += " - Heuristic: " + heuristic
+    if ordonnancement:
+        titre += " - Ordonnancement: " + ordonnancement
+    plt.title(titre)
     plt.ylabel("Total Cost")
     plt.xlabel("Configuration")
-    plt.show()
+    name = plot_folder+"total_cost_"+str(method)+"_"+str(heuristic)+"_"+str(ordonnancement)+".png"
+    plt.savefig(name)
+    plt.close()
+    #plt.show()
 
     # Plot pie charts for each configuration
     for i, mean_data in enumerate(all_mean_data):
         plt.figure()
         plt.pie(mean_data[" Number of tasks completed"], labels=[f"Taxi {i}" for i in range(len(mean_data[" Number of tasks completed"]))], autopct='%1.1f%%')
         plt.title(all_legend[i])
-        plt.show()
+        name = plot_folder+"pie_chart_" + all_legend[i].replace(", ", "_").replace(" ", "_") + ".png"
+        plt.savefig(name)
+        plt.close()
+        #plt.show()
 
-plot_data("datas/", method=None, heuristic=None, ordonnancement="Glouton")
+# plot_data("datas/", method="SSI", heuristic=None, ordonnancement=None)
+# plot_data("datas/", method="PSI", heuristic=None, ordonnancement=None)
+# plot_data("datas/", method="Regret", heuristic=None, ordonnancement=None)
+# plot_data("datas/", method="Random", heuristic=None, ordonnancement=None)
+plot_data("datas/", method=None, heuristic="Prim", ordonnancement="Glouton")
+# plot_data("datas/", method=None, heuristic="Insert", ordonnancement=None)
