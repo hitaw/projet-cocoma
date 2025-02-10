@@ -1,0 +1,58 @@
+{
+  "agt_metrics": {
+    "a0": {
+      "activity_ratio": 0.0032301276720418685,
+      "count_ext_msg": {
+        "_discovery_a0": 6,
+        "taxi_2": 1
+      },
+      "cycles": {
+        "taxi_2": 0
+      },
+      "size_ext_msg": {
+        "_discovery_a0": 0,
+        "taxi_2": 2
+      }
+    },
+    "a1": {
+      "activity_ratio": 0.047917723223239735,
+      "count_ext_msg": {
+        "_discovery_a1": 6,
+        "taxi_0": 2
+      },
+      "cycles": {
+        "taxi_0": 0
+      },
+      "size_ext_msg": {
+        "_discovery_a1": 0,
+        "taxi_0": 20
+      }
+    },
+    "a2": {
+      "activity_ratio": 1.894853758220565,
+      "count_ext_msg": {
+        "_discovery_a2": 6,
+        "taxi_1": 1
+      },
+      "cycles": {
+        "taxi_1": 0
+      },
+      "size_ext_msg": {
+        "_discovery_a2": 0,
+        "taxi_1": 256
+      }
+    }
+  },
+  "assignment": {
+    "taxi_0": "t0t1t2t3",
+    "taxi_1": "Vide",
+    "taxi_2": "Vide"
+  },
+  "cost": 189,
+  "cycle": 0,
+  "msg_count": 22,
+  "msg_size": 278,
+  "status": "FINISHED",
+  "time": 0.20130104200001142,
+  "violation": 0
+}

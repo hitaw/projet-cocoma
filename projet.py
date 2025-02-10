@@ -286,10 +286,10 @@ class auctioneer:
         
         with open(output_file, "w") as f:
             #Nom
-            f.write("name: dcop_tasks\n")
+            f.write("name: dcop_tasks\n\n")
 
             #Objectif : minimisation
-            f.write("objective: min\n")
+            f.write("objective: min\n\n")
 
             #Domaines : taches, les valeurs sont les positions des tâches
             f.write("domains:\n")
@@ -306,24 +306,28 @@ class auctioneer:
                         combinaisons.append("".join(comb))
             f.write(", ".join(combinaisons))
             f.write("]\n")
+            f.write("    type: non_semantic")
 
             #Variables : 1 variable associée à chaque taxi
-            f.write("variables:\n")
+            f.write("\nvariables:\n")
             variables = [f"taxi_{taxi.id}" for taxi in self.taxis]
             for var in variables:
                 f.write(f"  {var}:\n")
                 f.write("    domain: task_domain\n")
 
             #Contraintes 
-            f.write("constraints:\n")
+            f.write("\nconstraints:\n")
             
-            f.write("  cost_task:\n")
-            f.write("    type: extensional\n")
-            f.write("    function: |\n")
-            fn = ""
-            for taxi in self.taxis:
+            for var in variables:
+                name_fun = f"  cost_task_{var}:\n"
+                f.write(name_fun)
+                f.write("    type: extensional\n")
+                f.write(f"    variables: {var}\n")
+                f.write("    values:\n")
+                fn = ""
+                taxi = self.taxis[int(var[-1])]
                 actual_cost = taxi.calculate_cost(taxi.tasks)
-                fn += f'  {actual_cost}: Vide\n'
+                fn += f'      {actual_cost}: Vide\n'
                 for comb in combinaisons:
                     for task in tasks:
                         if comb != "Vide" and (f"t{task.id}" in comb):
@@ -335,20 +339,22 @@ class auctioneer:
                                 taxi_tasks = taxi.tasks[1:]
                             path = taxi.glouton(taxi_tasks + tasks_to_add, position)
                             cost = taxi.calculate_cost(path)
-                            fn += f'  {cost}: {comb}\n'
-            f.write(fn)
+                            fn += f'      {cost}: {comb}\n'
+                            break
+                f.write(fn)
 
             f.write("  too_many_assigned:\n")
             f.write("    type: intention\n")
             f.write("    function: |\n")
             fn = "      100000 if "
             #Si une tâche est assignée + d'une fois : pénalité
-            for var in variables:
-                for var2 in variables:
+            for i in range(len(variables)):
+                var = variables[i]
+                for var2 in variables[i+1:]:
                     for comb in combinaisons:
                         for comb2 in combinaisons:
-                            if comb != comb2 and comb != "Vide" and comb2 != "Vide" and (comb in comb2):
-                                fn += f"({var} == {comb} and {var2} == {comb2}) or "
+                            if comb != comb2 and comb != "Vide" and comb2 != "Vide" and (comb in comb2 or comb2 in comb):
+                                fn += f"({var} == '{comb}' and {var2} == '{comb2}') or "
 
             fn = fn[:-4]
             f.write(fn + " else 0\n")
@@ -361,13 +367,19 @@ class auctioneer:
                 for comb in combinaisons:
                     if comb != "Vide" and (id in comb):
                         for var in variables:
-                            fn += f"{var} != {comb} and "
+                            fn += f"{var} != '{comb}' and "
                 fn = fn[:-4]
-                fn += ") or "
+                fn += ") or ("
             fn = fn[:-4]
             f.write(fn + " else 0\n")
+
+            f.write("\nagents:\n")
+            for taxi in self.taxis:
+                f.write(f"    a{taxi.id}:\n")
+                f.write(f"      capacity: 1000\n")
+            
     
-    def dcop_assignation(self, algorithm="dpop", file_path="dcop_tasks.yml"):
+    def dcop_assignation(self, algorithm="dpop", file_path="dcop_tasks.yaml"):
         """
         Assigns tasks to taxis using a DCOP
         """
@@ -379,7 +391,7 @@ class auctioneer:
             print(f"Fichier DCOP chargé : {file_path}")
             
             # Commande Pydcop pour résoudre le DCOP
-            command = f"pydcop solve --algo {algorithm} dcop_tasks.yml"
+            command = f"pydcop solve --algo {algorithm} dcop_tasks.yaml"
 
             with open("resultats.json", "w") as result_file:
                 result = subprocess.run(command, shell=True, stdout=result_file, stderr=subprocess.PIPE, executable = "/bin/bash")
