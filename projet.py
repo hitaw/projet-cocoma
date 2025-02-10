@@ -527,9 +527,11 @@ class data_saver:
     def write_data(self, output_file):
         with open(output_file, "w") as f:
             title = f"Method : {self.method}, Heuristic : {self.heuristic}, Ordonnancement : {self.ordonnancement}\n"
+            f.write(title)
             f.write("Taxi ID, Number of tasks completed, Total cost\n")
             for run in self.data:
                 f.write(f"Run {self.data.index(run) + 1}\n")
+                f.write(f"Execution time : {self.time_data[self.data.index(run)]}\n")
                 for line in run:
                     f.write(f"{line[0]},{line[1]},{line[2]}\n")
 
@@ -556,6 +558,9 @@ class environnement:
         self.temps = 0
 
     def step(self):
+        """
+        Avance d'une unité de temps
+        """
         generating_tasks = True
         if self.stop_condition == 1 and self.ids >= self.stop_number:
             generating_tasks = False
@@ -564,7 +569,7 @@ class environnement:
 
         if self.time == 0:
             self.temps = time.time()
-
+            
         if self.time % self.freq_tasks == 0 and generating_tasks:
             new_tasks = self.generate_task(self.n_tasks)
             self.auctioneer.auction(new_tasks)
@@ -586,17 +591,13 @@ class environnement:
                     taxi.tasks_done = []
                     taxi.is_on_task = False
             else:
+                # Sauvegarde des données
                 data_folder = "datas"
                 if not os.path.exists(data_folder):
                     os.makedirs(data_folder)
 
                 existing_files = os.listdir(data_folder)
-                if existing_files:
-                    existing_files.sort()
-                    last_file = existing_files[-1]
-                    last_file_number = int(last_file.split('_')[-1].split('.')[0])
-                else:
-                    last_file_number = 0
+                last_file_number = len([file for file in existing_files if file.startswith("data_run")])
 
                 new_file_number = last_file_number + 1
                 new_file_name = f"data_run_{new_file_number}.txt"
@@ -626,6 +627,9 @@ class environnement:
         self.time += 1
 
     def generate_task(self, num_tasks:int):
+        """
+        Génère un nombre donné de tâches
+        """
         new_tasks = []
         for _ in range(num_tasks):
             departure = (random.randint(0, self.taille), random.randint(0, self.taille))
@@ -636,10 +640,10 @@ class environnement:
             self.tasks.append(new_task)
         return new_tasks
 
-    def distance(self, pos1:tuple, pos2:tuple):
-        return abs(pos1[0] - pos2[0]) + abs(pos1[1] - pos2[1])
-
     def next_position(self, position:tuple, destination:tuple):
+        """
+        Calcule la prochaine position d'un taxi
+        """
         fx, fy = position
         dx, dy = destination
         step_size = 1  # Détermine la vitesse de déplacement
